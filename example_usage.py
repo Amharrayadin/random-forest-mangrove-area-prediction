@@ -7,6 +7,7 @@ data = pd.DataFrame(data={
     'nir': [1264.16],
     'red': [0.547683],
 })
+data['year'] = pd.to_datetime(data['year'], format='%Y')
 
 rf = RF.load_model('./rfmodel.pkl')
 
