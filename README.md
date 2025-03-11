@@ -29,6 +29,27 @@ data = pd.DataFrame(data={
     'nir': [1264.16],
     'red': [0.547683],
 })
+data['year'] = pd.to_datetime(data['year'], format='%Y')
+
+# Memuat model dan melakukan prediksi
+rf = RF.load_model('./rfmodel.pkl')
+[area] = rf.predict(data)
+print(f"Prediksi luas area: {area}")
+```
+
+Atribut `year` juga dapat berupa tanggal seperti berikut:
+```python
+import pandas as pd 
+from custommodel import RandomForestRegressor as RF
+
+# Data baru untuk prediksi
+data = pd.DataFrame(data={
+    'year':['2026-01-01'], # Ganti dengan tanggal
+    'ndvi': [4197.05],
+    'nir': [1264.16],
+    'red': [0.547683],
+})
+data['year'] = pd.to_datetime(data['year'])
 
 # Memuat model dan melakukan prediksi
 rf = RF.load_model('./rfmodel.pkl')
