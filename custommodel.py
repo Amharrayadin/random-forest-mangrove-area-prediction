@@ -147,10 +147,11 @@ class RandomForestRegressor():
         self.verbose = verbose
         self.trees = []
 
-    def _bootstrap_sample(self, X, y):
+    def _bootstrap_sample(self, X, y, random_state=None):
         ''' Fungsi untuk mengambil sampel bootstrap '''
         n_samples = len(X)
-        indices = np.random.choice(n_samples, n_samples, replace=True)
+        rng = np.random.RandomState(random_state) 
+        indices = rng.choice(n_samples, n_samples, replace=True)
         return X.iloc[indices], y.iloc[indices]
 
     def fit(self, X, y):
@@ -159,7 +160,7 @@ class RandomForestRegressor():
         for i in range(self.n_estimators):
             tree = DecisionTreeRegressor(max_depth=self.max_depth, min_samples_split=self.min_samples_split)
             if self.bootstrap:
-                X_sample, y_sample = self._bootstrap_sample(X, y)
+                X_sample, y_sample = self._bootstrap_sample(X, y, random_state=12)
             else:
                 X_sample, y_sample = X, y
             tree.fit(X_sample, y_sample)
